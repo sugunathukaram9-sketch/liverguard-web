@@ -90,8 +90,9 @@ def api_health():
     return jsonify({"status": "ok", "model": "liver-risk-ensemble-sklearn", "metrics": METRICS})
 
 
-@app.route("/", methods=["GET", "POST"])
-def index():
+@app.route("/", defaults={"path": ""}, methods=["GET", "POST"])
+@app.route("/<path:path>", methods=["GET", "POST"])
+def index(path=""):
     result, alerts = None, []
     form = {"age": 52, "gender": "male", "total_bilirubin": 3.9, "direct_bilirubin": 2.0,
             "alkaline_phosphotase": 195, "alt": 27, "ast": 59,
