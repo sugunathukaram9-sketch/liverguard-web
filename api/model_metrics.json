@@ -1,0 +1,34 @@
+{
+  "accuracy": 74.0,
+  "precision": 76.6,
+  "recall": 91.3,
+  "f1": 83.3,
+  "auc": 0.816,
+  "cm": [
+    [
+      13,
+      29
+    ],
+    [
+      9,
+      95
+    ]
+  ],
+  "n": 583,
+  "features": [
+    "Age",
+    "Gender_Male",
+    "Total_Bilirubin",
+    "Direct_Bilirubin",
+    "Alkaline_Phosphotase",
+    "Alamine_Aminotransferase",
+    "Aspartate_Aminotransferase",
+    "Total_Protiens",
+    "Albumin",
+    "Albumin_and_Globulin_Ratio",
+    "Bilirubin_Ratio",
+    "AST_ALT_Ratio",
+    "Protein_Albumin_Diff"
+  ],
+  "cv_accuracy": 68.4
+}
