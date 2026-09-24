@@ -2,3 +2,5 @@ run_local.py
 __pycache__/
 *.pyc
 data/
+.vercel/
+node_modules/
