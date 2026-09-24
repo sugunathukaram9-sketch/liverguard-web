@@ -77,22 +77,33 @@ def predict_dict(payload):
     }
 
 
-@app.route("/api/predict", methods=["POST"])
-def api_predict():
+def _api_predict():
     try:
         return jsonify(predict_dict(request.get_json(force=True)))
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
 
-@app.route("/api/health")
-def api_health():
+def _api_health():
     return jsonify({"status": "ok", "model": "liver-risk-ensemble-sklearn", "metrics": METRICS})
 
 
 @app.route("/", defaults={"path": ""}, methods=["GET", "POST"])
 @app.route("/<path:path>", methods=["GET", "POST"])
-def index(path=""):
+def router(path=""):
+    # Single entry point (Vercel-safe): dispatch on the path manually.
+    if request.args.get("debug") == "1":
+        return jsonify({"request_path": request.path, "path_arg": path,
+                        "method": request.method, "url": request.url})
+    p = "/" + path.strip("/")
+    if p == "/api/predict":
+        return _api_predict()
+    if p == "/api/health":
+        return _api_health()
+    return index()
+
+
+def index():
     result, alerts = None, []
     form = {"age": 52, "gender": "male", "total_bilirubin": 3.9, "direct_bilirubin": 2.0,
             "alkaline_phosphotase": 195, "alt": 27, "ast": 59,
